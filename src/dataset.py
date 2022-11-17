@@ -1,37 +1,44 @@
+# Data Augmentation
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
-
-
-train_dir = "/Users/dim__gag/Desktop/stanford-cars-dataset/data/car_data/car_data/train"
-valid_dir = "/Users/dim__gag/Desktop/stanford-cars-dataset/data/car_data/car_data/test"
+import os
 
 image_size = 224
 batch_size = 32
 num_workers = 4
 
+## Data directoris
+# Local Paths
+train_dir = "/Users/dim__gag/Desktop/stanford-cars-dataset/data/car_data/car_data/train"
+valid_dir = "/Users/dim__gag/Desktop/stanford-cars-dataset/data/car_data/car_data/test"
 
-# Training transforms
-def get_train_transform(IMAGE_SIZE):
-    train_transform = transforms.Compose([
-        transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
-        transforms.RandomHorizontalFlip(p=0.5),
-        transforms.RandomRotation(35),
-        transforms.RandomAdjustSharpness(sharpness_factor=2, p=0.5),
-        transforms.RandomGrayscale(p=0.5),
-        transforms.RandomPerspective(distortion_scale=0.5, p=0.5),
-        transforms.RandomPosterize(bits=2, p=0.5),
-        transforms.ToTensor(),
-        transforms.Normalize(
-            mean=[0.485, 0.456, 0.406],
-            std=[0.229, 0.224, 0.225]
-            )
-    ])
-    return train_transform
+# train_dir = "car_data/car_data/train"
+# valid_dir = "car_data/car_data/test"
+train_images = os.listdir(train_dir)
+valid_images = os.listdir(valid_dir)
 
-# Validation transforms
-def get_valid_transform(IMAGE_SIZE):
+# Training Transforms
+def get_train_transform(image_size):
+  train_transform = transforms.Compose([
+      transforms.Resize((image_size, image_size)),
+      transforms.RandomHorizontalFlip(p=0.5),
+      transforms.RandomRotation(35),
+      transforms.RandomAdjustSharpness(sharpness_factor=2, p=0.5),
+      transforms.RandomGrayscale(p=0.5),
+      transforms.RandomPerspective(distortion_scale=0.5, p=0.5),
+      transforms.RandomPosterize(bits=2, p=0.5),
+      transforms.ToTensor(),
+      transforms.Normalize(
+          mean=[0.485, 0.456, 0.406],
+          std=[0.229, 0.224, 0.225]
+          )
+  ])
+  return train_transform
+
+
+def get_valid_transform(image_size):
     valid_transform = transforms.Compose([
-        transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
+        transforms.Resize((image_size, image_size)),
         transforms.ToTensor(),
         transforms.Normalize(
             mean=[0.485, 0.456, 0.406],
@@ -39,8 +46,6 @@ def get_valid_transform(IMAGE_SIZE):
             )
     ])
     return valid_transform
-
-
 
 def get_datasets():
     """
@@ -59,13 +64,9 @@ def get_datasets():
     return dataset_train, dataset_valid, dataset_train.classes
 
 
-
-
 def get_data_loaders(dataset_train, dataset_valid):
     """
-    Prepares the training and validation data loaders.
-    :param dataset_train: The training dataset.
-    :param dataset_valid: The validation dataset.
+    Input: the training and validation data.
     Returns the training and validation data loaders.
     """
     train_loader = DataLoader(
@@ -77,13 +78,3 @@ def get_data_loaders(dataset_train, dataset_valid):
         shuffle=False, num_workers=num_workers
     )
     return train_loader, valid_loader 
-
-
-# get the datasets
-
-dataset_train, dataset_valid, dataset_classes = get_datasets()
-
-print(f"[INFO]: Number of training images: {len(dataset_train)}")
-print(f"[INFO]: Number of validation images: {len(dataset_valid)}")
-# Load the training and validation data loaders.
-train_loader, valid_loader = get_data_loaders(dataset_train, dataset_valid)
