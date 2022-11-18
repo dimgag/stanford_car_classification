@@ -75,11 +75,23 @@ def build_model(pretrained=True, freeze=True, num_classes=196):
       param.requires_grad = True
   
   print("\nAdding Classification Head . . .")
+  # model.classifier = torch.nn.Sequential(
+  #   torch.nn.Dropout(p=0.2, inplace=True), 
+  #   torch.nn.Linear(in_features=1280, 
+  #                   out_features=num_classes,
+  #                   bias=True)).to(device)
+
+  # Add multiclass classification head
   model.classifier = torch.nn.Sequential(
-    torch.nn.Dropout(p=0.2, inplace=True), 
-    torch.nn.Linear(in_features=1280, 
-                    out_features=num_classes,
-                    bias=True)).to(device)
+    torch.nn.Dropout(p=0.2, inplace=True),
+    torch.nn.Linear(in_features=1280, out_features=640, bias=True),
+    torch.nn.ReLU(),
+    torch.nn.Dropout(p=0.2, inplace=True),
+    torch.nn.Linear(in_features=640, out_features=320, bias=True),
+    torch.nn.Softmax(),
+    torch.nn.Dropout(p=0.2, inplace=True),
+    torch.nn.Linear(in_features=320, out_features=num_classes, bias=True)).to(device)
+
 
   print("-"*50)
   print("New model parameters:")
@@ -102,3 +114,11 @@ summary(model,
         row_settings=["var_names"]
 )
 
+# 1. Change the augmentation 
+# 2. Change the optimizer
+# 3. Change the learning rate scheduler
+# 4. Change the loss function
+# 5. Change the classifier model architecture
+# 6. Change the number of epochs
+# 7. Change the batch size
+# 8. Change the number of classes.
