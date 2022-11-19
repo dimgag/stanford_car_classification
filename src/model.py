@@ -83,12 +83,9 @@ def build_model(pretrained=True, freeze=True, num_classes=196):
 
   # Add multiclass classification head
   model.classifier = torch.nn.Sequential(
-    torch.nn.Dropout(p=0.2, inplace=True),
     torch.nn.Linear(in_features=1280, out_features=640, bias=True),
-    torch.nn.ReLU(),
     torch.nn.Dropout(p=0.2, inplace=True),
     torch.nn.Linear(in_features=640, out_features=320, bias=True),
-    torch.nn.Softmax(),
     torch.nn.Dropout(p=0.2, inplace=True),
     torch.nn.Linear(in_features=320, out_features=num_classes, bias=True)).to(device)
 
