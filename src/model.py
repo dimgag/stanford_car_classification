@@ -16,7 +16,7 @@ def get_model_params(model):
 
 
 
-def build_model(pretrained=True, freeze=False, num_classes=196):
+def build_model(pretrained=True, freeze=True, num_classes=196):
   torch.manual_seed(42)
   torch.cuda.manual_seed(42)
   # Model Weights - Load Pretrained / Not Pretrained model
@@ -42,16 +42,46 @@ def build_model(pretrained=True, freeze=False, num_classes=196):
       param.requires_grad = True
   
   print("\nAdding Classification Head . . .")
-    # Add the classification head    # New test - 3 layer     
+  # Add the classification head
+  
+  # Classficication Head 1
+  # model.classifier[1] = nn.Linear(in_features=1280, out_features=num_classes).to(device)
+  
+
+  # Classficication Head 2
+  #     Results 2 - good results
+  # model.classifier = torch.nn.Sequential(
+  #   torch.nn.Linear(in_features=1280, out_features=640, bias=True),
+  #   torch.nn.Dropout(p=0.2, inplace=True),
+  #   torch.nn.Linear(in_features=640, out_features=320, bias=True),
+  #   torch.nn.Dropout(p=0.2, inplace=True),
+  #   torch.nn.Linear(in_features=320, out_features=num_classes, bias=True)).to(device)
+
+  
+  # Classficication Head 3  - NOT WORKING WELL... 
+  # model.classifier = nn.Sequential(
+  #   nn.Linear(in_features=1280, out_features=512),
+  #   nn.ReLU(),
+  #   nn.Dropout(0.25),
+  #   nn.Linear(512, 256),
+  #   nn.ReLU(),
+  #   nn.Dropout(0.5),
+  #   nn.Softmax(dim=1),
+  #   nn.Linear(in_features=256, out_features=num_classes)).to(device)
+
+
+  # Classficication Head 4
   model.classifier = nn.Sequential(
     nn.Linear(in_features=1280, out_features=512),
-    nn.ReLU(),
     nn.Dropout(0.25),
     nn.Linear(512, 256),
-    nn.ReLU(),
     nn.Dropout(0.5),
     nn.Softmax(dim=1),
     nn.Linear(in_features=256, out_features=num_classes)).to(device)
+    
+
+
+
 
 
   print("-"*50)
@@ -61,42 +91,18 @@ def build_model(pretrained=True, freeze=False, num_classes=196):
 
   return model    
 
-    
-#     Results 5
-  # Add multiclass classification head
-  # model.classifier[1] = nn.Linear(in_features=1280, out_features=num_classes).to(device)
-        
-    
-#     Results 4 - good results
-  # model.classifier = torch.nn.Sequential(
-  #   torch.nn.Linear(in_features=1280, out_features=640, bias=True),
-  #   torch.nn.Dropout(p=0.2, inplace=True),
-  #   torch.nn.Linear(in_features=640, out_features=320, bias=True),
-  #   torch.nn.Dropout(p=0.2, inplace=True),
-  #   torch.nn.Linear(in_features=320, out_features=num_classes, bias=True)).to(device)
 
-
-# # Results 6 - Next one maybe
-#   model.classifier = nn.Sequential(
-#       torch.nn.Linear(in_features=1280, out_features=640, bias=True),
-#       nn.AdaptiveAvgPool2d(320),
-#       nn.Dropout(p=0.2, inplace=True),
-#       torch.nn.Linear(in_features=320, out_features=num_classes, bias=True)).to(device)
-
-
-  
-
-
+'''
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# from torchinfo import summary
+from torchinfo import summary
 
-# model = build_model()
+model = build_model()
 
-# summary(model, 
-#         input_size=(32, 3, 224, 224), # make sure this is "input_size", not "input_shape" (batch_size, color_channels, height, width)
-#         verbose=0,
-#         col_names=["input_size", "output_size", "num_params", "trainable"],
-#         col_width=20,
-#         row_settings=["var_names"]
-# )
+summary(model, 
+        input_size=(32, 3, 224, 224), # make sure this is "input_size", not "input_shape" (batch_size, color_channels, height, width)
+        verbose=0,
+        col_names=["input_size", "output_size", "num_params", "trainable"],
+        col_width=20,
+        row_settings=["var_names"]
+)'''
 
