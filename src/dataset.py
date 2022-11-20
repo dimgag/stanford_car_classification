@@ -17,6 +17,10 @@ valid_dir = "/Users/dim__gag/Desktop/stanford-cars-dataset/data/car_data/car_dat
 train_images = os.listdir(train_dir)
 valid_images = os.listdir(valid_dir)
 
+# Previous approach paper recomended:
+# mean = [0.468, 0.457, 0.450]
+# std = [0.295, 0.294, 0.302]
+
 # Training Transforms
 def get_train_transform(image_size):
   train_transform = transforms.Compose([
