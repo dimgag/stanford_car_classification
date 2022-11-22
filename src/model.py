@@ -16,7 +16,7 @@ def get_model_params(model):
 
 
 
-def build_model(pretrained=True, freeze=True, num_classes=196):
+def build_model(pretrained=True, freeze=False, num_classes=196):
   torch.manual_seed(42)
   torch.cuda.manual_seed(42)
   # Model Weights - Load Pretrained / Not Pretrained model
@@ -70,14 +70,12 @@ def build_model(pretrained=True, freeze=True, num_classes=196):
   #   nn.Linear(in_features=256, out_features=num_classes)).to(device)
 
 
-  # Classficication Head 4
-  # model.classifier = nn.Sequential(
-  #   nn.Linear(in_features=1280, out_features=512),
-  #   nn.Dropout(0.25),
-  #   nn.Linear(512, 256),
-  #   nn.Dropout(0.5),
-  #   nn.Softmax(dim=1),
-  #   nn.Linear(in_features=256, out_features=num_classes)).to(device)
+  # Classficication Head 3 maybe this one 
+  model.classifier = nn.Sequential(
+    nn.Linear(in_features=1280, out_features=640),
+    nn.Linear(in_features=640, out_features=320),
+    nn.Dropout(0.5),
+    nn.Linear(in_features=320, out_features=num_classes)).to(device)
     
 
 
@@ -92,7 +90,7 @@ def build_model(pretrained=True, freeze=True, num_classes=196):
   return model    
 
 
-
+'''
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 from torchinfo import summary
 
@@ -104,5 +102,5 @@ summary(model,
         col_names=["input_size", "output_size", "num_params", "trainable"],
         col_width=20,
         row_settings=["var_names"]
-)
+)'''
 

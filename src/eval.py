@@ -26,8 +26,7 @@ train_loader, valid_loader = get_data_loaders(dataset_train, dataset_valid)
 
 
 ## Load the model
-model_dir = '/Users/dim__gag/Desktop/results4-opt-Adam-0001/model.pth'
-
+model_dir = '/Users/dim__gag/Desktop/results3-classifier3-waiting/model.pth'
 
 # Device - GPU or CPU
 device = ('cuda' if torch.cuda.is_available() else 'cpu')
@@ -36,8 +35,6 @@ print(f"Computation device: {device}")
 # Load the model
 model = torch.load(model_dir, map_location=torch.device('cpu'))
 
-
-# model.eval()
 
 torch.manual_seed(42)
 def eval_model(model: torch.nn.Module, 
