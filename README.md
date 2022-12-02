@@ -14,10 +14,10 @@ This folder contains results observed from transfer-learning & fine-tuning the E
 The models are trained using the following hyperparameters:
 | Model | Description | Optimizer | Learning Rate | Batch Size | Epochs | Accuracy | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| [Model-1]() | Transfer Learning | Adam | 0.0001 | 32 | 50 | 0.85 | Completed |
-| [Model-2]() | Classification Head 1 | Adam | 0.0001 | 32 | 50 | 0.90 | Completed |
-| [Model-3]() | Classification Head 2 | Adam | 0.0001 | 32 | 50 | 0.91 | Completed |
-| [Model-4]() | Classification Head 3 | Adam | 0.0001 | 32 | 50 | 0.91 | Training |
+| [Model-1]() | Transfer Learning | Adam | 0.001 | 32 | 50 | 0.85 | Completed |
+| [Model-2]() | Classification Head 1 | Adam | 0.001 | 32 | 50 | 0.90 | Completed |
+| [Model-3]() | Classification Head 2 | Adam | 0.001 | 32 | 50 | 0.91 | Completed |
+| [Model-4]() | Classification Head 3 | Adam | 0.001 | 32 | 50 | 0.91 | Training |
 | [Model-5]() | Classification Head 3 | SGD | 0.001 | 32 | 50 | 0.91 | ToDo |
 | [Model-6]() | Classification Head 3 | Adam | Lr_scheduler | 32 | 50 | 0.91 | ToDo |
 | [Model-7]() | Classification Head 3 | SGD | Lr_scheduler | 32 | 50 | 0.91 | ToDo |
