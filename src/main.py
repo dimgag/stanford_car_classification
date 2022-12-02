@@ -37,7 +37,7 @@ if __name__ == "__main__":
     image_size = 224
     batch_size = 32
     num_workers = 4
-    epochs = 30
+    epochs = 50
 
     ## Data Augmentation
     # Load the training and validation datasets.
