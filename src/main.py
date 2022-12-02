@@ -63,7 +63,8 @@ if __name__ == "__main__":
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
     ## Compile the model with optimiser and loss function.
     # EXPERIMENTS WITH OTHER OPTIMISERS AND OTHER LEARNING RATES CAN BE DONE HERE
-    optimizer = optim.Adam(model.parameters(), lr=0.0001)
+    # optimizer = optim.Adam(model.parameters(), lr=0.0001)
+    optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
     # Loss function.
     criterion = nn.CrossEntropyLoss()
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
