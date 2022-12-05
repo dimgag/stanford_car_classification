@@ -18,7 +18,7 @@ from model import build_model, get_model_params
 from train import train, validate
 from utils import save_model, save_plots
 
-from torch.optim.lr_scheduler import StepLR
+from torch.optim.lr_scheduler import StepLR, ReduceLROnPlateau
 
 if __name__ == "__main__":
     ## Dataset
@@ -61,20 +61,28 @@ if __name__ == "__main__":
 
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-    ## Compile the model with optimiser and loss function.
+    ## OPTIMIZER
     # EXPERIMENTS WITH OTHER OPTIMISERS AND OTHER LEARNING RATES CAN BE DONE HERE
     
     optimizer = optim.Adam(model.parameters(), lr=0.1)
-    # optimizer = torch.optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+    # optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9)
+    
+    
+    # LEARNING RATE SCHEDULER
+    # Step-wise Learning Rate Decay
+    # scheduler = StepLR(optimizer, step_size=1, gamma=0.1)
+    # scheduler = StepLR(optimizer, step_size=10, gamma=0.1)
 
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+    # Reduce on Loss Plateau Decay
+    # Reduce on Loss Plateau Decay, Patience=0, Factor=0.1
+    scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.1, patience=0, verbose=True)
     
-    ## Adam optimiser + Step Lr Scheduler
-    
-    scheduler = StepLR(optimizer, step_size=10, gamma=0.1)
+    # Reduce on Loss Plateau Decay, Patience=0, Factor=0.5 # NEXT EXPERIMENT
+    # scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=0, verbose=True)
+          
+    # Then do all the experiments with SGD Optimizer " optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9, nesterov=True) "
             
-            
-    # Loss function.
+    # LOSS FUNCTION
     criterion = nn.CrossEntropyLoss()
     
     ## Train the model
@@ -101,9 +109,11 @@ if __name__ == "__main__":
         train_acc.append(train_epoch_acc)
         valid_acc.append(valid_epoch_acc)
         
-
         # Decay Learning Rate
-        scheduler.step()
+        # scheduler.step()
+        
+        # Decay lr_scheduler.ReduceLROnPlateau
+        scheduler.step(valid_acc)
         
         # Print Learning Rate
         print('LR:', scheduler.get_lr())
