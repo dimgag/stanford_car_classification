@@ -101,6 +101,7 @@ if __name__ == "__main__":
         train_acc.append(train_epoch_acc)
         valid_acc.append(valid_epoch_acc)
         
+
         # Decay Learning Rate
         scheduler.step()
         
