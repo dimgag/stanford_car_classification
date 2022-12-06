@@ -75,7 +75,7 @@ if __name__ == "__main__":
 
     # Reduce on Loss Plateau Decay
     # Reduce on Loss Plateau Decay, Patience=0, Factor=0.1
-    scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.1, patience=0, verbose=True)
+    scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=0, verbose=True)
     
     # Reduce on Loss Plateau Decay, Patience=0, Factor=0.5 # NEXT EXPERIMENT
     # scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=0, verbose=True)
@@ -113,7 +113,7 @@ if __name__ == "__main__":
         # scheduler.step()
         
         # Decay lr_scheduler.ReduceLROnPlateau
-        scheduler.step(valid_acc)
+        scheduler.step(valid_epoch_acc)
         
         # Print Learning Rate
         print('LR:', scheduler.get_lr())
