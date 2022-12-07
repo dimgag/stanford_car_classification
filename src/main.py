@@ -37,7 +37,7 @@ if __name__ == "__main__":
     image_size = 224
     batch_size = 32
     num_workers = 4
-    epochs = 50
+    epochs = 100
 
     ## Data Augmentation
     # Load the training and validation datasets.
@@ -64,8 +64,8 @@ if __name__ == "__main__":
     ## OPTIMIZER
     # EXPERIMENTS WITH OTHER OPTIMISERS AND OTHER LEARNING RATES CAN BE DONE HERE
     
-    optimizer = optim.Adam(model.parameters(), lr=0.1)
-    # optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9)
+    # optimizer = optim.Adam(model.parameters(), lr=0.1)
+    optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9)
     
     
     # LEARNING RATE SCHEDULER
@@ -75,7 +75,10 @@ if __name__ == "__main__":
 
     # Reduce on Loss Plateau Decay
     # Reduce on Loss Plateau Decay, Patience=0, Factor=0.1
-    scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=0, verbose=True)
+
+    # scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.1, patience=0, verbose=True)
+    
+    scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=0, verbose=True)
     
     # Reduce on Loss Plateau Decay, Patience=0, Factor=0.5 # NEXT EXPERIMENT
     # scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=0, verbose=True)
@@ -116,7 +119,7 @@ if __name__ == "__main__":
         scheduler.step(valid_epoch_acc)
         
         # Print Learning Rate
-        print('LR:', scheduler.get_lr())
+        # print('LR:', scheduler.get_lr())
         print(f"Training loss: {train_epoch_loss:.3f}, training acc: {train_epoch_acc:.3f}")
         print(f"Validation loss: {valid_epoch_loss:.3f}, validation acc: {valid_epoch_acc:.3f}")
         print('-'*50)
