@@ -71,14 +71,14 @@ if __name__ == "__main__":
     # LEARNING RATE SCHEDULER
     # Step-wise Learning Rate Decay
     # scheduler = StepLR(optimizer, step_size=1, gamma=0.1)
-    scheduler = StepLR(optimizer, step_size=10, gamma=0.1)
+    # scheduler = StepLR(optimizer, step_size=10, gamma=0.1)
 
     # Reduce on Loss Plateau Decay
     # Reduce on Loss Plateau Decay, Patience=0, Factor=0.1
 
     # scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.1, patience=0, verbose=True)
     
-    # scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=2, verbose=True)
+    scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=2, verbose=True)
     
     # Reduce on Loss Plateau Decay, Patience=0, Factor=0.5 # NEXT EXPERIMENT
     # scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=0, verbose=True)
@@ -114,12 +114,13 @@ if __name__ == "__main__":
         
         # Decay Learning Rate
         scheduler.step()
+        print('LR:', scheduler.get_lr())
         
         # Decay lr_scheduler.ReduceLROnPlateau
         # scheduler.step(valid_epoch_acc)
         
         # Print Learning Rate
-        print('LR:', scheduler.get_lr())
+
         print(f"Training loss: {train_epoch_loss:.3f}, training acc: {train_epoch_acc:.3f}")
         print(f"Validation loss: {valid_epoch_loss:.3f}, validation acc: {valid_epoch_acc:.3f}")
         print('-'*50)
