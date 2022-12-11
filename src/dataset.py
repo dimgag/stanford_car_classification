@@ -9,8 +9,8 @@ num_workers = 4
 
 ## Data directoris
 # Local Paths
-train_dir = "/Users/dim__gag/Desktop/stanford-cars-dataset/data/car_data/car_data/train"
-valid_dir = "/Users/dim__gag/Desktop/stanford-cars-dataset/data/car_data/car_data/test"
+train_dir = "data/stanford-cars-dataset/data/car_data/car_data/train"
+valid_dir = "data/stanford-cars-dataset/data/car_data/car_data/train"
 
 # train_dir = "car_data/car_data/train"
 # valid_dir = "car_data/car_data/test"

@@ -56,17 +56,14 @@ def build_model(pretrained=True, freeze=False, num_classes=196):
     torch.nn.Linear(in_features=320, out_features=num_classes, bias=True)).to(device)
 
 
-
   # Classficication Head 3
   model.classifier = nn.Sequential(
     nn.Linear(in_features=1280, out_features=640),
     nn.Linear(in_features=640, out_features=320),
     nn.Dropout(0.5),
     nn.Linear(in_features=320, out_features=num_classes)).to(device)
-    
 
-
-
+  # Print the model parameters
   print("-"*50)
   print("New model parameters:")
   get_model_params(model)

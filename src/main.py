@@ -101,7 +101,6 @@ if __name__ == "__main__":
     
     
     for epoch in range(epochs):
-        # Print Num Epoch
         print(f"Epoch {epoch+1} of {epochs}")
         train_epoch_loss, train_epoch_acc = train(model, train_loader, 
                                                 optimizer, criterion)
@@ -112,14 +111,12 @@ if __name__ == "__main__":
         train_acc.append(train_epoch_acc)
         valid_acc.append(valid_epoch_acc)
         
-        # Decay Learning Rate
+        # Use for decay Learning Rate - StepLR
         scheduler.step()
-        print('LR:', scheduler.get_lr())
+        # print('LR:', scheduler.get_lr())
         
-        # Decay lr_scheduler.ReduceLROnPlateau
+        # Use for decay Learning Rate - ReduceLROnPlateau
         # scheduler.step(valid_epoch_acc)
-        
-        # Print Learning Rate
 
         print(f"Training loss: {train_epoch_loss:.3f}, training acc: {train_epoch_acc:.3f}")
         print(f"Validation loss: {valid_epoch_loss:.3f}, validation acc: {valid_epoch_acc:.3f}")
