@@ -63,3 +63,11 @@ Contains the list of dependencies for the project.
 ```bash
 pip install -r requirements.txt
 ```
+
+1. Unzip files in data folder
+
+unzip data/stanford-cars-dataset/data.zip
+
+2. Install dependences 
+
+pip install -r requirments.txt
