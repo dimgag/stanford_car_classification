@@ -1,0 +1,1 @@
+The data can be downloaded from [here](https://www.kaggle.com/datasets/jutrera/stanford-car-dataset-by-classes-folder).

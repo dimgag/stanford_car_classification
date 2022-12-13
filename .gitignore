@@ -1,6 +1,6 @@
 # IGNORE FILES AND FOLDERS #
 ############################
-/data/*
+/data/stanford-cars-dataset/*
 /models/*
 /docs/* 
 
