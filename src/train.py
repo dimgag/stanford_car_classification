@@ -3,7 +3,6 @@ from tqdm.auto import tqdm
 
 # Define the device.
 device = ('cuda' if torch.cuda.is_available() else 'cpu')
-# print(f"Computation device: {device}")
 
 
 def train(model, trainloader, optimizer, criterion):

@@ -42,7 +42,7 @@ def build_model(pretrained=True, freeze=False, num_classes=196):
       param.requires_grad = True
   
   print("\nAdding Classification Head . . .")
-  # Add the classification head
+  ## Add the classification head
   # Classficication Head 1
   model.classifier[1] = nn.Linear(in_features=1280, out_features=num_classes).to(device)
   

@@ -1,4 +1,3 @@
-# Data Augmentation
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 import os
@@ -21,6 +20,8 @@ valid_images = os.listdir(valid_dir)
 # mean = [0.468, 0.457, 0.450]
 # std = [0.295, 0.294, 0.302]
 
+
+## Data Augmentation
 # Training Transforms
 def get_train_transform(image_size):
   train_transform = transforms.Compose([
