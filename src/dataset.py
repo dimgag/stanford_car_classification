@@ -11,18 +11,11 @@ num_workers = 4
 train_dir = "data/stanford-cars-dataset/data/car_data/car_data/train"
 valid_dir = "data/stanford-cars-dataset/data/car_data/car_data/train"
 
-# train_dir = "car_data/car_data/train"
-# valid_dir = "car_data/car_data/test"
 train_images = os.listdir(train_dir)
 valid_images = os.listdir(valid_dir)
 
-# Previous approach paper recomended:
-# mean = [0.468, 0.457, 0.450]
-# std = [0.295, 0.294, 0.302]
-
-
 ## Data Augmentation
-# Training Transforms
+# Training Data Transforms
 def get_train_transform(image_size):
   train_transform = transforms.Compose([
       transforms.Resize((image_size, image_size)),
@@ -40,7 +33,7 @@ def get_train_transform(image_size):
   ])
   return train_transform
 
-
+# Validation Data Transforms
 def get_valid_transform(image_size):
     valid_transform = transforms.Compose([
         transforms.Resize((image_size, image_size)),

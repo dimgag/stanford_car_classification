@@ -21,70 +21,48 @@ from utils import save_model, save_plots
 from torch.optim.lr_scheduler import StepLR, ReduceLROnPlateau
 
 if __name__ == "__main__":
-    ## Dataset
     # Load the dataset directories
-    train_dir = "car_data/car_data/train"
-    valid_dir = "car_data/car_data/test"
+    train_dir = "data/stanford-cars-dataset/data/car_data/car_data/train"
+    valid_dir = "data/stanford-cars-dataset/data/car_data/car_data/train"
 
-    # train_dir = "/Users/dim__gag/Desktop/stanford-cars-dataset/data/car_data/car_data/train"
-    # valid_dir = "/Users/dim__gag/Desktop/stanford-cars-dataset/data/car_data/car_data/test"
-
-    # Show images from train directory
     train_images = os.listdir(train_dir)
     valid_images = os.listdir(valid_dir)
 
-    # Required constants.
+    # Required constants
     image_size = 224
     batch_size = 32
     num_workers = 4
     epochs = 100
 
     ## Data Augmentation
-    # Load the training and validation datasets.
+    # Load the training and validation datasets
     dataset_train, dataset_valid, dataset_classes = get_datasets()
     # Load the training and validation data loaders
     train_loader, valid_loader = get_data_loaders(dataset_train, dataset_valid)
 
-
-
-    ## Get the fine tuned model
+    ## Get the model
     model = build_model()
-    # Show the model parameters
-    # get_model_params(model)
-
-
-    # # Define the device.
-    # device = ('cuda' if torch.cuda.is_available() else 'cpu')
-    # print(f"Computation device: {device}")
-    # # Add the model to the device.
-    # model = model.to(device)
-
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-    ## OPTIMIZER
     # EXPERIMENTS WITH OTHER OPTIMISERS AND OTHER LEARNING RATES CAN BE DONE HERE
+    # You can choose the optimiser and learning rate scheduler here by uncommenting the lines below
     
+    ## OPTIMIZER 
     # optimizer = optim.Adam(model.parameters(), lr=0.1)
     optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9)
     
-    
-    # LEARNING RATE SCHEDULER
-    # Step-wise Learning Rate Decay
+    ## LEARNING RATE SCHEDULER
+    ## Step-wise Learning Rate Decay
     # scheduler = StepLR(optimizer, step_size=1, gamma=0.1)
     # scheduler = StepLR(optimizer, step_size=10, gamma=0.1)
 
-    # Reduce on Loss Plateau Decay
+    ## Reduce on Loss Plateau Decay
     # Reduce on Loss Plateau Decay, Patience=0, Factor=0.1
-
     # scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.1, patience=0, verbose=True)
-    
     scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=2, verbose=True)
     
-    # Reduce on Loss Plateau Decay, Patience=0, Factor=0.5 # NEXT EXPERIMENT
-    # scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=0, verbose=True)
-          
-    # Then do all the experiments with SGD Optimizer " optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9, nesterov=True) "
-            
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+
     # LOSS FUNCTION
     criterion = nn.CrossEntropyLoss()
     
