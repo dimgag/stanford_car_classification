@@ -9,7 +9,7 @@ num_workers = 4
 ## Data directoris
 # Local Paths
 train_dir = "data/stanford-cars-dataset/data/car_data/car_data/train"
-valid_dir = "data/stanford-cars-dataset/data/car_data/car_data/train"
+valid_dir = "data/stanford-cars-dataset/data/car_data/car_data/valid"
 
 train_images = os.listdir(train_dir)
 valid_images = os.listdir(valid_dir)
